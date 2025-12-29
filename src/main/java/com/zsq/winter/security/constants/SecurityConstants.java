@@ -113,12 +113,7 @@ public final class SecurityConstants {
     public static final String HYPHEN_SEPARATOR = "-";
 
     // ==================== 配置相关常量 ====================
-    
-    /**
-     * 安全模块配置前缀
-     * application.yml中安全模块的配置前缀
-     */
-    public static final String SECURITY_CONFIG_PREFIX = "zt.security";
+
 
     // ==================== URL路径常量 ====================
     
