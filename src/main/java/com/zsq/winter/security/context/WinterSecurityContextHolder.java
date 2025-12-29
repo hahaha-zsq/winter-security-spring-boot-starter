@@ -15,9 +15,13 @@ import java.util.List;
  * 3. 支持异步任务和线程池场景下的上下文传递
  * 4. 提供便捷的用户信息访问方法
  * 
- * 注意：此类与Spring Security的SecurityContextHolder配合使用
+ * 技术特点：
+ * - 基于阿里巴巴TTL库，解决线程池复用导致的上下文丢失问题
+ * - 与Spring Security的SecurityContextHolder配合使用
+ * - 提供类型安全的用户信息访问接口
+ * - 自动管理上下文生命周期，防止内存泄漏
  * 
- * @author zsq
+ * @author dandandiaoming
  */
 @Slf4j
 public class WinterSecurityContextHolder {
@@ -29,6 +33,13 @@ public class WinterSecurityContextHolder {
 
     /**
      * 设置登录上下文
+     * 
+     * 将用户的认证信息设置到当前线程的上下文中，支持跨线程传递。
+     * 
+     * @param userId 用户唯一标识，不能为空
+     * @param username 用户登录名，不能为空  
+     * @param roles 用户角色列表，可以为空
+     * @param permissions 用户权限列表，可以为空
      */
     public static void setContext(String userId, String username, List<String> roles, List<String> permissions) {
         if (userId == null || username == null) {
@@ -49,6 +60,8 @@ public class WinterSecurityContextHolder {
 
     /**
      * 获取完整的登录上下文对象
+     * 
+     * @return 当前线程的登录上下文，如果未设置则返回null
      */
     public static LoginContext getContext() {
         return CONTEXT_HOLDER.get();
@@ -56,6 +69,8 @@ public class WinterSecurityContextHolder {
 
     /**
      * 获取当前登录用户ID
+     * 
+     * @return 用户ID字符串，如果未登录则返回null
      */
     public static String getUserId() {
         LoginContext context = getContext();
@@ -64,6 +79,10 @@ public class WinterSecurityContextHolder {
 
     /**
      * 获取当前用户ID（Long类型）
+     * 
+     * 将字符串类型的用户ID转换为Long类型，便于数据库操作
+     * 
+     * @return 用户ID的Long值，如果未登录或转换失败则返回null
      */
     public static Long getUserIdAsLong() {
         String userId = getUserId();
@@ -71,7 +90,7 @@ public class WinterSecurityContextHolder {
             try {
                 return Long.valueOf(userId);
             } catch (NumberFormatException e) {
-                log.warn("用户ID格式错误: {}", userId);
+                log.warn("用户ID格式错误，无法转换为Long类型: {}", userId);
             }
         }
         return null;
@@ -79,6 +98,8 @@ public class WinterSecurityContextHolder {
 
     /**
      * 获取当前登录用户名
+     * 
+     * @return 用户登录名，如果未登录则返回null
      */
     public static String getUsername() {
         LoginContext context = getContext();
@@ -87,6 +108,8 @@ public class WinterSecurityContextHolder {
 
     /**
      * 获取当前用户的角色列表
+     * 
+     * @return 用户角色列表，如果未登录或无角色则返回null
      */
     public static List<String> getRoles() {
         LoginContext context = getContext();
@@ -95,6 +118,8 @@ public class WinterSecurityContextHolder {
 
     /**
      * 获取当前用户的权限列表
+     * 
+     * @return 用户权限列表，如果未登录或无权限则返回null
      */
     public static List<String> getPermissions() {
         LoginContext context = getContext();
@@ -103,6 +128,8 @@ public class WinterSecurityContextHolder {
 
     /**
      * 获取用户登录时间戳
+     * 
+     * @return 登录时间的毫秒时间戳，如果未登录则返回null
      */
     public static Long getLoginTime() {
         LoginContext context = getContext();
@@ -111,6 +138,9 @@ public class WinterSecurityContextHolder {
 
     /**
      * 检查当前用户是否具有指定角色
+     * 
+     * @param role 要检查的角色名称
+     * @return 如果用户具有该角色返回true，否则返回false
      */
     public static boolean hasRole(String role) {
         List<String> roles = getRoles();
@@ -119,6 +149,9 @@ public class WinterSecurityContextHolder {
 
     /**
      * 检查当前用户是否具有指定权限
+     * 
+     * @param permission 要检查的权限名称
+     * @return 如果用户具有该权限返回true，否则返回false
      */
     public static boolean hasPermission(String permission) {
         List<String> permissions = getPermissions();
@@ -127,7 +160,11 @@ public class WinterSecurityContextHolder {
 
     /**
      * 清除当前线程的登录上下文
-     * 注意：此方法会在JwtAuthenticationFilter的finally块中自动调用
+     * 
+     * 重要说明：
+     * 1. 此方法会在JwtAuthenticationFilter的finally块中自动调用
+     * 2. 手动调用时需要确保在合适的时机，避免影响正常的请求处理
+     * 3. 清除操作是线程安全的，不会影响其他线程的上下文
      */
     public static void clear() {
         LoginContext context = getContext();
@@ -139,13 +176,21 @@ public class WinterSecurityContextHolder {
 
     /**
      * 登录上下文数据类
+     * 
+     * 封装用户的登录信息，包括基本身份信息和权限数据
+     * 使用Lombok的@Data注解自动生成getter/setter方法
      */
     @Data
     public static class LoginContext {
+        /** 用户唯一标识 */
         private String userId;
+        /** 用户登录名 */
         private String username;
+        /** 用户角色列表 */
         private List<String> roles;
+        /** 用户权限列表 */
         private List<String> permissions;
+        /** 登录时间戳（毫秒） */
         private Long loginTime;
     }
 }

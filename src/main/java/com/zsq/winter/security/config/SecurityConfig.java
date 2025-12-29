@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * 3. 集成自定义JWT认证过滤器
  * 4. 配置URL白名单
  *
- * @author zsq
+ * @author dandandiaoming
  */
 @Configuration
 @EnableWebSecurity
@@ -30,6 +30,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final SecurityProperties securityProperties;
 
+    /**
+     * 配置HTTP安全策略
+     * 
+     * 主要配置项：
+     * 1. 禁用CSRF保护 - 适用于无状态的REST API
+     * 2. 设置无状态会话管理 - 不创建HttpSession
+     * 3. 配置请求授权规则 - 白名单路径允许匿名访问，其他需要认证
+     * 4. 禁用默认的表单登录和HTTP Basic认证
+     * 5. 添加自定义JWT认证过滤器到过滤器链中
+     * 
+     * @param http HTTP安全配置对象
+     * @throws Exception 配置过程中可能抛出的异常
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http

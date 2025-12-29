@@ -14,7 +14,7 @@ package com.zsq.winter.security.constants;
  * - 提供详细的注释说明，便于理解和维护
  * - 采用final class设计，防止被继承和实例化
  * 
- * @author zsq
+ * @author dandandiaoming
  */
 public final class SecurityConstants {
 

@@ -13,7 +13,13 @@ import java.util.List;
  * 统一管理安全模块的配置项，支持通过application.yml进行配置
  * 配置前缀：winter.security
  * 
- * @author zsq
+ * 主要功能：
+ * 1. 配置URL白名单，无需认证即可访问的路径
+ * 2. 配置HTTP请求头名称，用于网关传递用户信息
+ * 3. 配置JWT认证相关参数
+ * 4. 配置分隔符等工具参数
+ * 
+ * @author dandandiaoming
  */
 @Data
 @ConfigurationProperties(prefix = "winter.security")

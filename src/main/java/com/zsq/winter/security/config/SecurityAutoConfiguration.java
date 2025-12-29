@@ -18,7 +18,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
  * 提供Spring Boot自动装配功能，实现开箱即用的安全认证
  * 支持双路径认证：网关路径（从请求头获取用户信息）和直连路径（JWT token验证）
  * 
- * @author zsq
+ * @author dandandiaoming
  */
 @Slf4j
 @Configuration

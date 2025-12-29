@@ -32,20 +32,32 @@ import java.util.stream.Collectors;
  * 2. JWT直连认证：解析JWT token进行身份验证
  * 3. 上下文管理：设置Spring Security和自定义上下文，请求结束后自动清理
  * 
- * @author zsq
+ * 认证流程：
+ * 1. 优先检查网关传递的用户信息（X-User-*头）
+ * 2. 如果没有网关信息，则尝试JWT直连认证
+ * 3. 认证成功后同时设置自定义上下文和Spring Security上下文
+ * 4. 请求处理完成后自动清理上下文，防止线程池复用导致的数据污染
+ * 
+ * @author dandandiaoming
  */
 @Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     /**
-     * 认证服务，用于JWT验证和用户信息获取
+     * Token认证器，用于JWT验证和用户信息获取
      */
     private final TokenAuthenticator tokenAuthenticator;
+    
+    /**
+     * 安全配置属性，包含请求头名称、白名单等配置信息
+     */
     private final SecurityProperties securityProperties;
 
     /**
-     * 构造函数注入认证服务客户端
-     * Spring会自动注入AuthFeignClient实例
+     * 构造函数 - 注入依赖的认证服务
+     * 
+     * @param tokenAuthenticator Token认证器实现
+     * @param securityProperties 安全配置属性
      */
     public JwtAuthenticationFilter(TokenAuthenticator tokenAuthenticator, SecurityProperties securityProperties) {
         this.tokenAuthenticator = tokenAuthenticator;
@@ -75,7 +87,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         try {
-            // 检查网关认证信息
+            // 检查网关认证信息（网关需要移除用户手动传递的这些请求头，防止伪造）
             String userId = request.getHeader(securityProperties.getUserIdHeader());
             String username = request.getHeader(securityProperties.getUsernameHeader());
 
@@ -151,7 +163,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     /**
-     * 处理JWT直连认证
+     * 处理JWT直连认证（开发人员直接访问其他微服务，不经过网关，这样就需要直接判断token是否正确，并设置正确的权限信息）
      * 调用TokenAuthenticator验证token并设置上下文
      */
     private void handleDirectAuthentication(String token) {
