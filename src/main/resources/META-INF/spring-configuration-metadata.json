@@ -1,0 +1,66 @@
+{
+  "groups": [
+    {
+      "name": "winter.security",
+      "type": "com.zsq.winter.security.config.SecurityProperties",
+      "sourceType": "com.zsq.winter.security.config.SecurityProperties"
+    },
+    {
+      "name": "winter.security.whitelist",
+      "type": "com.zsq.winter.security.config.SecurityProperties$Whitelist",
+      "sourceType": "com.zsq.winter.security.config.SecurityProperties",
+      "sourceMethod": "getWhitelist()"
+    }
+  ],
+  "properties": [
+    {
+      "name": "winter.security.authorization-header",
+      "type": "java.lang.String",
+      "description": "JWT认证头 - 标准的Authorization头，用于直连认证",
+      "sourceType": "com.zsq.winter.security.config.SecurityProperties"
+    },
+    {
+      "name": "winter.security.bearer-prefix",
+      "type": "java.lang.String",
+      "description": "JWT前缀 - Bearer token的标准前缀",
+      "sourceType": "com.zsq.winter.security.config.SecurityProperties"
+    },
+    {
+      "name": "winter.security.gateway-role-and-permission-separator",
+      "type": "java.lang.String",
+      "description": "网关角色和权限分隔符 - 用于解析网关传递的角色和权限列表",
+      "sourceType": "com.zsq.winter.security.config.SecurityProperties"
+    },
+    {
+      "name": "winter.security.permissions-header",
+      "type": "java.lang.String",
+      "description": "用户权限请求头 - 网关传递用户权限列表（逗号分隔）",
+      "sourceType": "com.zsq.winter.security.config.SecurityProperties"
+    },
+    {
+      "name": "winter.security.roles-header",
+      "type": "java.lang.String",
+      "description": "用户角色请求头 - 网关传递用户角色列表（逗号分隔）",
+      "sourceType": "com.zsq.winter.security.config.SecurityProperties"
+    },
+    {
+      "name": "winter.security.user-id-header",
+      "type": "java.lang.String",
+      "description": "用户ID请求头 - 网关传递用户唯一标识",
+      "sourceType": "com.zsq.winter.security.config.SecurityProperties"
+    },
+    {
+      "name": "winter.security.username-header",
+      "type": "java.lang.String",
+      "description": "用户名请求头 - 网关传递用户登录名",
+      "sourceType": "com.zsq.winter.security.config.SecurityProperties"
+    },
+    {
+      "name": "winter.security.whitelist.urls",
+      "type": "java.util.List<java.lang.String>",
+      "description": "URL白名单路径列表 这些路径不需要进行身份认证，可以直接访问",
+      "sourceType": "com.zsq.winter.security.config.SecurityProperties$Whitelist"
+    }
+  ],
+  "hints": []
+}
