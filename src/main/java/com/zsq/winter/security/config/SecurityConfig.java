@@ -2,13 +2,24 @@ package com.zsq.winter.security.config;
 
 import com.zsq.winter.security.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.HandlerExceptionResolver;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Spring Security配置类
@@ -29,6 +40,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final SecurityProperties securityProperties;
+
+    // 注入 Spring MVC 的异常解析器
+    // 使用 @Qualifier 确保注入的是主要的处理流程，避免歧义
+    @Qualifier("handlerExceptionResolver")
+    private final HandlerExceptionResolver handlerExceptionResolver;
 
     /**
      * 配置HTTP安全策略
@@ -62,7 +78,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().disable()
                 // 禁用HTTP Basic认证
                 .httpBasic().disable()
+                // === 异常处理委托 ===
+                .exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPoint())
+                .accessDeniedHandler(accessDeniedHandler())
+
+                .and()
                 // 添加JWT认证过滤器
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+    }
+    /**
+     * 认证失败处理：委托给 HandlerExceptionResolver
+     */
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint() {
+        return (request, response, authException) -> {
+            // 将异常转发给全局异常处理器
+            handlerExceptionResolver.resolveException(request, response, null, authException);
+        };
+    }
+
+    /**
+     * 权限不足处理：委托给 HandlerExceptionResolver
+     */
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return (request, response, accessDeniedException) -> {
+            // 将异常转发给全局异常处理器
+            handlerExceptionResolver.resolveException(request, response, null, accessDeniedException);
+        };
     }
 }
