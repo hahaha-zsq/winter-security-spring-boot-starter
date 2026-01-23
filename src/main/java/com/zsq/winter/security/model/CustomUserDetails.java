@@ -1,5 +1,6 @@
 package com.zsq.winter.security.model;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
  * 
  * @author zsq
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 @Data
 public class CustomUserDetails implements UserDetails {
 

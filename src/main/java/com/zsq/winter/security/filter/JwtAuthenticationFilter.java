@@ -219,6 +219,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (ObjectUtils.isEmpty(str)) {
             return Collections.emptyList();
         }
-        return Arrays.asList(str.split(securityProperties.getGatewayRoleAndPermissionSeparator()));
+        // 这是 Arrays.asList(...) 返回的内部类，不是标准的 java.util.ArrayList。
+        // 出于安全考虑（防止反序列化任意类造成 RCE 等漏洞），Spring Security 从某个版本开始默认启用了 Jackson 的“类型白名单”机制（Type Allowlist）。只有明确允许的类才能被反序列化。
+        return Arrays.stream(str.split(securityProperties.getGatewayRoleAndPermissionSeparator())).collect(Collectors.toList());
     }
 }
