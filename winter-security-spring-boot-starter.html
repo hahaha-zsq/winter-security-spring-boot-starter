@@ -141,14 +141,21 @@
       letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--text-display);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
     }
     .nav-brand .dot {
       display: inline-block;
       width: 6px; height: 6px;
       border-radius: 50%;
       background: var(--accent);
-      margin-right: var(--space-sm);
       vertical-align: middle;
+    }
+    .nav-brand .brand-icon {
+      width: 18px;
+      height: 18px;
+      color: var(--accent);
     }
     .nav-meta {
       font-family: var(--font-mono);
@@ -338,6 +345,14 @@
       font-family: var(--font-mono);
       font-size: 12px;
       color: var(--text-disabled);
+    }
+
+    .card-icon {
+      width: 24px;
+      height: 24px;
+      color: var(--text-disabled);
+      flex-shrink: 0;
+      margin-bottom: 4px;
     }
     .feature-card .card-title {
       font-size: 16px;
@@ -609,7 +624,7 @@
 </button>
 
 <nav class="nav">
-  <div class="nav-brand"><span class="dot"></span>WINTER SECURITY</div>
+  <div class="nav-brand"><svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span class="dot"></span>WINTER SECURITY</div>
   <div class="nav-meta">
     <span>v0.0.3</span>
     <span>apache 2.0</span>
@@ -620,17 +635,18 @@
   <h1 class="hero-title">WINTER SECURITY<span class="accent-dot"></span></h1>
   <p class="hero-tagline">开箱即用的 Spring Boot 安全认证启动器。支持 JWT 认证与微服务网关集成，零配置启动，让开发者专注于业务。</p>
   <div class="hero-stats">
-    <div class="hero-stat"><span class="hero-stat-value">10</span><span class="hero-stat-label">Java 源文件</span></div>
-    <div class="hero-stat"><span class="hero-stat-value">2</span><span class="hero-stat-label">认证模式</span></div>
-    <div class="hero-stat"><span class="hero-stat-value">9</span><span class="hero-stat-label">上下文 API</span></div>
-    <div class="hero-stat"><span class="hero-stat-value">18</span><span class="hero-stat-label">白名单路径</span></div>
-    <div class="hero-stat"><span class="hero-stat-value">3</span><span class="hero-stat-label">权限注解</span></div>
+    <div class="hero-stat"><span class="hero-stat-value"><svg style="width:20px;height:20px;vertical-align:middle;margin-right:6px;color:var(--text-disabled)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>10</span><span class="hero-stat-label">Java 源文件</span></div>
+    <div class="hero-stat"><span class="hero-stat-value"><svg style="width:20px;height:20px;vertical-align:middle;margin-right:6px;color:var(--text-disabled)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>2</span><span class="hero-stat-label">认证模式</span></div>
+    <div class="hero-stat"><span class="hero-stat-value"><svg style="width:20px;height:20px;vertical-align:middle;margin-right:6px;color:var(--text-disabled)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>9</span><span class="hero-stat-label">上下文 API</span></div>
+    <div class="hero-stat"><span class="hero-stat-value"><svg style="width:20px;height:20px;vertical-align:middle;margin-right:6px;color:var(--text-disabled)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>18</span><span class="hero-stat-label">白名单路径</span></div>
+    <div class="hero-stat"><span class="hero-stat-value"><svg style="width:20px;height:20px;vertical-align:middle;margin-right:6px;color:var(--text-disabled)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>3</span><span class="hero-stat-label">权限注解</span></div>
   </div>
 </header>
 
 <section class="section">
   <div class="section-header">
     <span class="section-number">[01]</span>
+    <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;color:var(--text-disabled);flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
     <span class="section-line"></span>
   </div>
   <h2 class="section-title">
@@ -685,7 +701,7 @@
 
 <section class="section">
   <div class="section-header">
-    <span class="section-number">[02]</span>
+    <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;color:var(--text-disabled);flex-shrink:0"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
     <span class="section-line"></span>
   </div>
   <h2 class="section-title">
@@ -694,54 +710,63 @@
   </h2>
   <div class="features-grid">
     <div class="feature-card">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       <span class="card-number">01</span>
       <span class="card-title">双路径认证</span>
       <span class="card-desc">自动识别请求来源：若 HTTP 请求头中包含 X-User-Id 和 X-Username，则判定为网关认证模式，直接从请求头中提取用户信息。若网关信息不存在，则回退至 JWT 直连模式。两种模式对业务代码完全透明。</span>
       <span class="card-tag">核心</span>
     </div>
     <div class="feature-card">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
       <span class="card-number">02</span>
       <span class="card-title">零配置启动</span>
       <span class="card-desc">spring.factories 自动加载 SecurityAutoConfiguration。@ConditionalOnClass 确保仅在安全环境激活，@ConditionalOnMissingBean 允许一键替换默认实现。内置 18 个白名单默认路径，启动即用。</span>
       <span class="card-tag">核心</span>
     </div>
     <div class="feature-card">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
       <span class="card-number">03</span>
       <span class="card-title">跨线程上下文</span>
       <span class="card-desc">基于阿里巴巴 TransmittableThreadLocal（v2.14.5）实现用户上下文在线程间的自动传递。在线程池复用场景下也能正确传播上下文。请求结束后 finally 块确保彻底清除，防止数据泄漏。</span>
       <span class="card-tag">核心</span>
     </div>
     <div class="feature-card">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
       <span class="card-number">04</span>
       <span class="card-title">方法级权限</span>
       <span class="card-desc">SecurityConfig 通过 @EnableGlobalMethodSecurity 一次性启用 @PreAuthorize（SpEL 表达式）、@Secured（角色检查）、@RolesAllowed（JSR-250 标准）三种注解。所有注解自动生效。</span>
       <span class="card-tag">安全</span>
     </div>
     <div class="feature-card">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
       <span class="card-number">05</span>
       <span class="card-title">双重上下文</span>
       <span class="card-desc">认证成功后同时设置两套上下文：WinterSecurityContextHolder（基于 TTL 的自定义上下文）和 SecurityContextHolder（Spring Security 标准上下文）。新代码推荐 WinterSecurityContextHolder，已有代码无需改动。</span>
       <span class="card-tag">基础设施</span>
     </div>
     <div class="feature-card">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a6 6 0 0 1-12 0V8"/></svg>
       <span class="card-number">06</span>
       <span class="card-title">函数式扩展</span>
       <span class="card-desc">TokenAuthenticator 为 @FunctionalInterface，只需实现 authenticate(String) 单一方法。支持 JWT、OAuth2、自定义 Token 等任意类型。返回 AuthResult 封装类，提供 success/failure 工厂方法。</span>
       <span class="card-tag">扩展</span>
     </div>
     <div class="feature-card">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/></svg>
       <span class="card-number">07</span>
       <span class="card-title">网关请求头规范</span>
       <span class="card-desc">标准化 X-User-Id、X-Username、X-User-Roles、X-User-Permissions 四个请求头。网关认证后注入，下游服务直接使用。网关必须移除客户端原始请求头防止身份伪造。</span>
       <span class="card-tag">安全</span>
     </div>
     <div class="feature-card">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
       <span class="card-number">08</span>
       <span class="card-title">统一异常处理</span>
       <span class="card-desc">AuthenticationEntryPoint 和 AccessDeniedHandler 委托给 HandlerExceptionResolver，通过 @ControllerAdvice 统一处理。认证异常仅记录日志，不阻断过滤器链。</span>
       <span class="card-tag">基础设施</span>
     </div>
     <div class="feature-card">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
       <span class="card-number">09</span>
       <span class="card-title">权限缓存优化</span>
       <span class="card-desc">CustomUserDetails 的 getAuthorities() 将权限字符串延迟转换为 SimpleGrantedAuthority 并缓存到 transient 字段。setPermissions() 时自动清除缓存。</span>
@@ -752,7 +777,7 @@
 
 <section class="section">
   <div class="section-header">
-    <span class="section-number">[03]</span>
+    <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;color:var(--text-disabled);flex-shrink:0"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
     <span class="section-line"></span>
   </div>
   <h2 class="section-title">
@@ -836,7 +861,7 @@
 
 <section class="section">
   <div class="section-header">
-    <span class="section-number">[04]</span>
+    <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;color:var(--text-disabled);flex-shrink:0"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
     <span class="section-line"></span>
   </div>
   <h2 class="section-title">
@@ -845,7 +870,7 @@
   </h2>
   <div class="workflow-steps">
     <div class="workflow-step">
-      <span class="step-num">01</span>
+      <span class="step-num"><svg style="width:16px;height:16px;vertical-align:middle;margin-right:6px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>01</span>
       <div class="step-content">
         <div class="step-title">添加 Maven 依赖</div>
         <div class="step-desc">
@@ -860,7 +885,7 @@
       </div>
     </div>
     <div class="workflow-step">
-      <span class="step-num">02</span>
+      <span class="step-num"><svg style="width:16px;height:16px;vertical-align:middle;margin-right:6px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="16 3 21 8 8 21 3 21 3 16 16 3"/></svg>02</span>
       <div class="step-content">
         <div class="step-title">实现 TokenAuthenticator 接口</div>
         <div class="step-desc">
@@ -907,7 +932,7 @@
       </div>
     </div>
     <div class="workflow-step">
-      <span class="step-num">03</span>
+      <span class="step-num"><svg style="width:16px;height:16px;vertical-align:middle;margin-right:6px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>03</span>
       <div class="step-content">
         <div class="step-title">配置 application.yml（可选）</div>
         <div class="step-desc">
@@ -928,7 +953,7 @@
       </div>
     </div>
     <div class="workflow-step">
-      <span class="step-num">04</span>
+      <span class="step-num"><svg style="width:16px;height:16px;vertical-align:middle;margin-right:6px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>04</span>
       <div class="step-content">
         <div class="step-title">获取用户信息与权限控制</div>
         <div class="step-desc">
@@ -953,7 +978,7 @@
       </div>
     </div>
     <div class="workflow-step">
-      <span class="step-num">05</span>
+      <span class="step-num"><svg style="width:16px;height:16px;vertical-align:middle;margin-right:6px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/></svg>05</span>
       <div class="step-content">
         <div class="step-title">网关集成与请求头规范</div>
         <div class="step-desc">
@@ -1020,7 +1045,7 @@
 
 <section class="section">
   <div class="section-header">
-    <span class="section-number">[05]</span>
+    <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;color:var(--text-disabled);flex-shrink:0"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
     <span class="section-line"></span>
   </div>
   <h2 class="section-title">
@@ -1044,7 +1069,7 @@
 
 <section class="section">
   <div class="section-header">
-    <span class="section-number">[06]</span>
+    <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;color:var(--text-disabled);flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
     <span class="section-line"></span>
   </div>
   <h2 class="section-title">
@@ -1053,39 +1078,39 @@
   </h2>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-sm)">
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:var(--space-sm) var(--space-md)">
-      <span class="caption" style="display:block;color:var(--accent)">网关请求头</span>
+      <span class="caption" style="display:block;color:var(--accent)"><svg style="width:14px;height:14px;vertical-align:middle;margin-right:6px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>网关请求头</span>
       <span class="body-sm">网关必须移除客户端传递的 X-User-Id、X-Username 等请求头，防止用户伪造身份信息。网关是信任的边界。</span>
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:var(--space-sm) var(--space-md)">
-      <span class="caption" style="display:block;color:var(--accent)">TokenAuthenticator 必须替换</span>
+      <span class="caption" style="display:block;color:var(--accent)"><svg style="width:14px;height:14px;vertical-align:middle;margin-right:6px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>TokenAuthenticator 必须替换</span>
       <span class="body-sm">默认实现仅用于开发调试，接受 "DefaultTokenAuthenticator" 前缀 Token 并返回硬编码用户（ID=666666）。</span>
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:var(--space-sm) var(--space-md)">
-      <span class="caption" style="display:block;color:var(--warning)">CSRF 默认禁用</span>
+      <span class="caption" style="display:block;color:var(--warning)"><svg style="width:14px;height:14px;vertical-align:middle;margin-right:6px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>CSRF 默认禁用</span>
       <span class="body-sm">适用于无状态 REST API。若需要有状态场景需自行覆盖 SecurityConfig 的 configure(HttpSecurity) 方法。</span>
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:var(--space-sm) var(--space-md)">
-      <span class="caption" style="display:block;color:var(--warning)">STATELESS 会话</span>
+      <span class="caption" style="display:block;color:var(--warning)"><svg style="width:14px;height:14px;vertical-align:middle;margin-right:6px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>STATELESS 会话</span>
       <span class="body-sm">Session 策略为 STATELESS，不创建 HttpSession。需要会话的场景需自行调整 SessionCreationPolicy。</span>
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:var(--space-sm) var(--space-md)">
-      <span class="caption" style="display:block;color:var(--text-secondary)">异步上下文传播</span>
+      <span class="caption" style="display:block;color:var(--text-secondary)"><svg style="width:14px;height:14px;vertical-align:middle;margin-right:6px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>异步上下文传播</span>
       <span class="body-sm">TTL 确保 @Async 和自定义线程池中用户上下文自动传递。需确保线程池使用 TTL 包装方式。</span>
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:var(--space-sm) var(--space-md)">
-      <span class="caption" style="display:block;color:var(--text-secondary)">finally 防泄漏</span>
+      <span class="caption" style="display:block;color:var(--text-secondary)"><svg style="width:14px;height:14px;vertical-align:middle;margin-right:6px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>finally 防泄漏</span>
       <span class="body-sm">过滤器同时调用 WinterSecurityContextHolder.clear() 和 SecurityContextHolder.clearContext()，避免线程池复用导致的数据污染。</span>
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:var(--space-sm) var(--space-md)">
-      <span class="caption" style="display:block;color:var(--text-secondary)">异常隔离设计</span>
+      <span class="caption" style="display:block;color:var(--text-secondary)"><svg style="width:14px;height:14px;vertical-align:middle;margin-right:6px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>异常隔离设计</span>
       <span class="body-sm">认证异常仅记录日志，不阻断过滤器链。业务代码可通过检查 SecurityContext 是否为空来判断认证状态。</span>
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:var(--space-sm) var(--space-md)">
-      <span class="caption" style="display:block;color:var(--text-secondary)">Jackson 安全</span>
+      <span class="caption" style="display:block;color:var(--text-secondary)"><svg style="width:14px;height:14px;vertical-align:middle;margin-right:6px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Jackson 安全</span>
       <span class="body-sm">解析逗号分隔字符串时使用 stream().collect(Collectors.toList()) 而非 Arrays.asList()，避免 Jackson 反序列化类型白名单问题。</span>
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:var(--space-sm) var(--space-md);grid-column:1/-1">
-      <span class="caption" style="display:block;color:var(--text-secondary)">CustomUserDetails 权限缓存</span>
+      <span class="caption" style="display:block;color:var(--text-secondary)"><svg style="width:14px;height:14px;vertical-align:middle;margin-right:6px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>CustomUserDetails 权限缓存</span>
       <span class="body-sm">getAuthorities() 将权限延迟转换为 SimpleGrantedAuthority 并缓存到 transient 字段。setPermissions() 时自动清除缓存。白名单内建 18 个默认路径（actuator、健康检查、静态资源、Swagger、auth 端点、错误处理等）。</span>
     </div>
   </div>
@@ -1097,8 +1122,8 @@
     <span class="label" style="margin-left:var(--space-md);opacity:0.5">0.0.3</span>
   </div>
   <div style="display:flex;gap:var(--space-lg);align-items:center">
-    <a href="https://github.com/hahaha-zsq/winter-security-spring-boot-starter" target="_blank">GitHub</a>
-    <a href="https://search.maven.org/artifact/io.github.hahaha-zsq/winter-security-spring-boot-starter" target="_blank">Maven Central</a>
+    <a href="https://github.com/hahaha-zsq/winter-security-spring-boot-starter" target="_blank"><svg style="width:14px;height:14px;vertical-align:middle;margin-right:4px" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>GitHub</a>
+    <a href="https://search.maven.org/artifact/io.github.hahaha-zsq/winter-security-spring-boot-starter" target="_blank"><svg style="width:14px;height:14px;vertical-align:middle;margin-right:4px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg>Maven Central</a>
     <span class="label" style="opacity:0.4">Apache 2.0</span>
   </div>
 </footer>
