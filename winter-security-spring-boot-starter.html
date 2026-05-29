@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Winter Security — Spring Boot Starter</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❄</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Doto:wght@400..700&family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #000000;
+      --surface: #111111;
+      --surface-raised: #1A1A1A;
+      --border: #222222;
+      --border-visible: #333333;
+      --text-disabled: #666666;
+      --text-secondary: #999999;
+      --text-primary: #E8E8E8;
+      --text-display: #FFFFFF;
+      --accent: #D71921;
+      --accent-subtle: rgba(215,25,33,0.15);
+      --success: #4A9E5C;
+      --warning: #D4A843;
+      --interactive: #5B9BF6;
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --space-2xl: 48px;
+      --space-3xl: 64px;
+      --space-4xl: 96px;
+      --font-display: 'Doto', 'Space Mono', monospace;
+      --font-body: 'Space Grotesk', 'DM Sans', system-ui, sans-serif;
+      --font-mono: 'Space Mono', 'JetBrains Mono', 'SF Mono', monospace;
+    }
+
+    [data-theme="light"] {
+      --black: #F5F5F5;
+      --surface: #FFFFFF;
+      --surface-raised: #F0F0F0;
+      --border: #E8E8E8;
+      --border-visible: #CCCCCC;
+      --text-disabled: #999999;
+      --text-secondary: #666666;
+      --text-primary: #1A1A1A;
+      --text-display: #000000;
+      --interactive: #007AFF;
+      --accent-subtle: rgba(215,25,33,0.1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+    body {
+      background: var(--black);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.6;
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    ::selection { background: var(--accent-subtle); color: var(--accent); }
+    a { color: inherit; }
+
+    .theme-toggle {
+      position: fixed;
+      top: var(--space-lg);
+      right: var(--space-lg);
+      z-index: 100;
+      width: 44px; height: 44px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--border-visible);
+      display: flex;
+      align-items: center; justify-content: center;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-secondary);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+    .theme-toggle:hover { border-color: var(--text-secondary); color: var(--text-primary); }
+    .theme-toggle .sun, .theme-toggle .moon { display: none; }
+    [data-theme="dark"] .theme-toggle .sun { display: block; }
+    [data-theme="light"] .theme-toggle .moon { display: block; }
+
+    .label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+    .caption {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .body-text {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text-primary);
+    }
+    .body-sm {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+    .inline-code {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--accent);
+      background: var(--accent-subtle);
+      padding: 1px 6px;
+      border-radius: 2px;
+    }
+    .inline-code-sec {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-lg) var(--space-2xl);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-display);
+    }
+    .nav-brand .dot {
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-right: var(--space-sm);
+      vertical-align: middle;
+    }
+    .nav-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-disabled);
+    }
+    .nav-meta span { margin-left: var(--space-md); }
+
+    .hero {
+      padding: var(--space-4xl) var(--space-2xl) var(--space-3xl);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: radial-gradient(circle, var(--border) 0.5px, transparent 0.5px);
+      background-size: 16px 16px;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 72px;
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: var(--text-display);
+      margin-bottom: var(--space-lg);
+      position: relative;
+    }
+    .hero-title .accent-dot {
+      display: inline-block;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-left: var(--space-sm);
+      vertical-align: middle;
+    }
+    .hero-tagline {
+      font-size: 20px;
+      font-weight: 300;
+      line-height: 1.4;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin-bottom: var(--space-xl);
+      position: relative;
+    }
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2xl);
+      position: relative;
+    }
+    .hero-stat {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .hero-stat-value {
+      font-family: var(--font-mono);
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1.0;
+      color: var(--text-display);
+      letter-spacing: -0.02em;
+    }
+    .hero-stat-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-disabled);
+    }
+
+    .section {
+      padding: var(--space-3xl) var(--space-2xl);
+      border-bottom: 1px solid var(--border);
+    }
+    .section:last-of-type { border-bottom: none; }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      margin-bottom: var(--space-xl);
+    }
+    .section-header .section-number {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-disabled);
+      letter-spacing: 0.04em;
+    }
+    .section-header .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--text-display);
+      margin-bottom: var(--space-lg);
+    }
+    .section-title .label-prefix {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      display: block;
+      margin-bottom: var(--space-sm);
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+    }
+    @media (max-width: 768px) { .overview-grid { grid-template-columns: 1fr; } }
+    .overview-highlight {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--text-display);
+      margin-bottom: var(--space-md);
+    }
+    .sub-heading {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-display);
+      margin-top: var(--space-lg);
+      margin-bottom: var(--space-sm);
+    }
+    .reason-list {
+      list-style: none;
+      padding: 0;
+      margin: var(--space-sm) 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .reason-list li {
+      padding-left: var(--space-md);
+      position: relative;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .reason-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--text-disabled);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+    @media (max-width: 900px) { .features-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .features-grid { grid-template-columns: 1fr; } }
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      transition: border-color 200ms ease-out;
+    }
+    .feature-card:hover { border-color: var(--border-visible); }
+    .feature-card .card-number {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-disabled);
+    }
+    .feature-card .card-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-display);
+    }
+    .feature-card .card-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .feature-card .card-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-disabled);
+      border: 1px solid var(--border-visible);
+      border-radius: 999px;
+      padding: 2px 10px;
+      align-self: flex-start;
+      margin-top: var(--space-xs);
+    }
+
+    .pipeline {
+      margin: var(--space-xl) 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+    .pipeline-node {
+      background: var(--surface);
+      border: 1px solid var(--border-visible);
+      border-radius: 4px;
+      padding: var(--space-sm) var(--space-md);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-secondary);
+      text-align: center;
+      flex: 0 1 auto;
+    }
+    .pipeline-arrow {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--text-disabled);
+      display: flex;
+      align-items: center;
+    }
+    .pipeline-node.accent { border-color: var(--accent); color: var(--accent); }
+    .pipeline-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 780px;
+      margin-bottom: var(--space-lg);
+    }
+
+    .arch-tree {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 2.0;
+      color: var(--text-primary);
+      padding: var(--space-lg);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      white-space: pre;
+      overflow-x: auto;
+      margin-bottom: var(--space-xl);
+    }
+    .arch-tree .hl { color: var(--accent); }
+    .arch-tree .dim { color: var(--text-disabled); }
+    .arch-tree .sec { color: var(--text-secondary); }
+
+    .bean-order {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      align-items: center;
+      margin: var(--space-md) 0 var(--space-xl);
+    }
+    .bean-order-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: var(--space-xs) var(--space-sm);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-secondary);
+      text-align: center;
+    }
+    .bean-order-item.highlight { border-color: var(--accent); color: var(--accent); }
+    .bean-order-arrow {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-disabled);
+    }
+
+    .flow-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin: var(--space-sm) 0;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .flow-row .flow-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--text-disabled);
+      flex-shrink: 0;
+    }
+    .flow-row .flow-dot.accent { background: var(--accent); }
+    .flow-row .flow-dot.success { background: var(--success); }
+    .flow-row .flow-label {
+      color: var(--text-disabled);
+      min-width: 36px;
+      flex-shrink: 0;
+    }
+
+    .code-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: var(--space-md) var(--space-lg);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      overflow-x: auto;
+      white-space: pre;
+      margin: var(--space-sm) 0 var(--space-lg);
+    }
+    .code-block .cm { color: var(--text-disabled); }
+    .code-block .kw { color: var(--accent); }
+    .code-block .str { color: var(--success); }
+    .code-block .val { color: var(--text-primary); }
+
+    .workflow-steps {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      max-width: 780px;
+    }
+    .workflow-step {
+      display: flex;
+      gap: var(--space-md);
+      align-items: flex-start;
+    }
+    .workflow-step .step-num {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-disabled);
+      min-width: 32px;
+      line-height: 1.6;
+      flex-shrink: 0;
+    }
+    .workflow-step .step-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-display);
+    }
+    .workflow-step .step-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-top: var(--space-xs);
+    }
+
+    .ext-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .ext-table th {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      text-align: left;
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: 1px solid var(--border-visible);
+      font-weight: 400;
+    }
+    .ext-table td {
+      font-weight: 300;
+      color: var(--text-primary);
+      padding: var(--space-md);
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .ext-table td:first-child {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-display);
+      white-space: nowrap;
+    }
+    .ext-table td:nth-child(2) {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .ext-table tr:last-child td { border-bottom: none; }
+
+    @media (max-width: 700px) {
+      .ext-table, .ext-table thead, .ext-table tbody, .ext-table tr, .ext-table th, .ext-table td { display: block; }
+      .ext-table thead { display: none; }
+      .ext-table td { padding: var(--space-sm) var(--space-md); border-bottom: none; }
+      .ext-table td::before {
+        content: attr(data-label);
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-disabled);
+        display: block;
+        margin-bottom: 2px;
+      }
+      .ext-table tr {
+        border-bottom: 1px solid var(--border);
+        padding: var(--space-md) 0;
+      }
+    }
+
+    .footer {
+      padding: var(--space-xl) var(--space-2xl);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+    .footer .label { color: var(--text-disabled); }
+    .footer a {
+      color: var(--interactive);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+    .footer a:hover { color: var(--text-display); }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--border-visible); border-radius: 3px; }
+
+    .mt-lg { margin-top: var(--space-lg); }
+    .mb-lg { margin-bottom: var(--space-lg); }
+    .mb-xl { margin-bottom: var(--space-xl); }
+    .flex { display: flex; }
+    .flex-col { flex-direction: column; }
+    .gap-xs { gap: var(--space-xs); }
+    .gap-md { gap: var(--space-md); }
+  </style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+  <span class="sun">SUN</span>
+  <span class="moon">MOON</span>
+</button>
+
+<nav class="nav">
+  <div class="nav-brand"><span class="dot"></span>WINTER SECURITY</div>
+  <div class="nav-meta">
+    <span>v0.0.3</span>
+    <span>apache 2.0</span>
+  </div>
+</nav>
+
+<header class="hero">
+  <h1 class="hero-title">WINTER SECURITY<span class="accent-dot"></span></h1>
+  <p class="hero-tagline">开箱即用的 Spring Boot 安全认证启动器。支持 JWT 认证与微服务网关集成，零配置启动，让开发者专注于业务。</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="hero-stat-value">10</span><span class="hero-stat-label">Java 源文件</span></div>
+    <div class="hero-stat"><span class="hero-stat-value">2</span><span class="hero-stat-label">认证模式</span></div>
+    <div class="hero-stat"><span class="hero-stat-value">9</span><span class="hero-stat-label">上下文 API</span></div>
+    <div class="hero-stat"><span class="hero-stat-value">18</span><span class="hero-stat-label">白名单路径</span></div>
+    <div class="hero-stat"><span class="hero-stat-value">3</span><span class="hero-stat-label">权限注解</span></div>
+  </div>
+</header>
+
+<section class="section">
+  <div class="section-header">
+    <span class="section-number">[01]</span>
+    <span class="section-line"></span>
+  </div>
+  <h2 class="section-title">
+    <span class="label-prefix">/ 项目简介</span>
+    概述
+  </h2>
+  <div class="overview-grid">
+    <div>
+      <p class="overview-highlight">将 Spring Security 安全认证零配置地嵌入 Spring Boot 应用的启动器，一个依赖即可获得完整的认证授权能力。</p>
+      <p class="body-text">基于 Spring Boot 2.6.11 构建，专为微服务架构设计的轻量级认证授权解决方案。通过 Spring Boot Starter 机制，将复杂的安全配置简化为引入一个依赖即可完成——零配置即可获得 JWT 认证、网关集成、跨线程上下文传递等核心能力。</p>
+      <p class="body-text mt-lg">采用双路径认证策略——网关认证模式从 HTTP 请求头获取网关传递的用户信息（推荐生产环境使用），JWT 直连模式解析 Bearer Token 进行身份验证（适合开发调试）。两种模式自动识别，无需手动切换。同时提供 <span class="inline-code-sec">TokenAuthenticator</span> 函数式接口作为可扩展点，支持各种 Token 类型（JWT、OAuth2、自定义 Token 等），满足不同场景的认证需求。</p>
+      <div class="sub-heading">为什么选择 Winter Security</div>
+      <ul class="reason-list">
+        <li>传统 Spring Security 配置繁琐重复，每个微服务都要编写相同的安全过滤器链、认证逻辑和异常处理。</li>
+        <li>本 Starter 通过 Auto-Configuration 自动化这一切，所有扩展点基于 @ConditionalOnMissingBean，提供默认实现的同时支持一键替换。</li>
+        <li>基于阿里巴巴 TransmittableThreadLocal（TTL）实现跨线程上下文传递，解决线程池复用导致的上下文丢失问题。</li>
+        <li>同时填充 SecurityContextHolder 和 WinterSecurityContextHolder 两套上下文，兼容现有代码的同时提供更便捷的 API。</li>
+        <li>内置合理的白名单默认值，涵盖 actuator、Swagger、静态资源等 18 个路径，安全性与易用性兼顾。</li>
+      </ul>
+    </div>
+    <div>
+      <div class="flex flex-col gap-md">
+        <div>
+          <span class="label" style="display:block;margin-bottom:var(--space-xs)">Java 版本</span>
+          <span style="font-family:var(--font-mono);font-size:24px;font-weight:700;color:var(--text-display);">1.8</span>
+          <span style="font-family:var(--font-mono);font-size:12px;color:var(--text-disabled);margin-left:var(--space-sm);">+ 兼容</span>
+        </div>
+        <div>
+          <span class="label" style="display:block;margin-bottom:var(--space-xs)">Maven 中央仓库</span>
+          <a href="https://search.maven.org/artifact/io.github.hahaha-zsq/winter-security-spring-boot-starter" target="_blank" style="font-family:var(--font-mono);font-size:14px;font-weight:400;color:var(--text-secondary);text-decoration:none;display:block;line-height:1.6;">
+            io.github.hahaha-zsq<br/>
+            <span style="color:var(--text-disabled);font-size:12px;">winter-security-spring-boot-starter</span>
+          </a>
+          <div class="code-block" style="margin-top:var(--space-sm);margin-bottom:0;padding:var(--space-sm) var(--space-md);font-size:12px;"><span class="cm">&lt;dependency&gt;</span>
+  <span class="kw">&lt;groupId&gt;</span>io.github.hahaha-zsq<span class="kw">&lt;/groupId&gt;</span>
+  <span class="kw">&lt;artifactId&gt;</span>winter-security-spring-boot-starter<span class="kw">&lt;/artifactId&gt;</span>
+  <span class="kw">&lt;version&gt;</span><span class="val">0.0.3</span><span class="kw">&lt;/version&gt;</span>
+<span class="cm">&lt;/dependency&gt;</span></div>
+        </div>
+        <div>
+          <span class="label" style="display:block;margin-bottom:var(--space-xs)">开源协议</span>
+          <span style="font-family:var(--font-mono);font-size:16px;font-weight:400;color:var(--text-secondary);">Apache 2.0</span>
+        </div>
+        <div>
+          <span class="label" style="display:block;margin-bottom:var(--space-xs)">代码仓库</span>
+          <span style="font-family:var(--font-mono);font-size:14px;font-weight:400;color:var(--interactive);">github.com/hahaha-zsq</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <span class="section-number">[02]</span>
+    <span class="section-line"></span>
+  </div>
+  <h2 class="section-title">
+    <span class="label-prefix">/ 核心能力</span>
+    特性
+  </h2>
+  <div class="features-grid">
+    <div class="feature-card">
+      <span class="card-number">01</span>
+      <span class="card-title">双路径认证</span>
+      <span class="card-desc">自动识别请求来源：若 HTTP 请求头中包含 X-User-Id 和 X-Username，则判定为网关认证模式，直接从请求头中提取用户信息。若网关信息不存在，则回退至 JWT 直连模式。两种模式对业务代码完全透明。</span>
+      <span class="card-tag">核心</span>
+    </div>
+    <div class="feature-card">
+      <span class="card-number">02</span>
+      <span class="card-title">零配置启动</span>
+      <span class="card-desc">spring.factories 自动加载 SecurityAutoConfiguration。@ConditionalOnClass 确保仅在安全环境激活，@ConditionalOnMissingBean 允许一键替换默认实现。内置 18 个白名单默认路径，启动即用。</span>
+      <span class="card-tag">核心</span>
+    </div>
+    <div class="feature-card">
+      <span class="card-number">03</span>
+      <span class="card-title">跨线程上下文</span>
+      <span class="card-desc">基于阿里巴巴 TransmittableThreadLocal（v2.14.5）实现用户上下文在线程间的自动传递。在线程池复用场景下也能正确传播上下文。请求结束后 finally 块确保彻底清除，防止数据泄漏。</span>
+      <span class="card-tag">核心</span>
+    </div>
+    <div class="feature-card">
+      <span class="card-number">04</span>
+      <span class="card-title">方法级权限</span>
+      <span class="card-desc">SecurityConfig 通过 @EnableGlobalMethodSecurity 一次性启用 @PreAuthorize（SpEL 表达式）、@Secured（角色检查）、@RolesAllowed（JSR-250 标准）三种注解。所有注解自动生效。</span>
+      <span class="card-tag">安全</span>
+    </div>
+    <div class="feature-card">
+      <span class="card-number">05</span>
+      <span class="card-title">双重上下文</span>
+      <span class="card-desc">认证成功后同时设置两套上下文：WinterSecurityContextHolder（基于 TTL 的自定义上下文）和 SecurityContextHolder（Spring Security 标准上下文）。新代码推荐 WinterSecurityContextHolder，已有代码无需改动。</span>
+      <span class="card-tag">基础设施</span>
+    </div>
+    <div class="feature-card">
+      <span class="card-number">06</span>
+      <span class="card-title">函数式扩展</span>
+      <span class="card-desc">TokenAuthenticator 为 @FunctionalInterface，只需实现 authenticate(String) 单一方法。支持 JWT、OAuth2、自定义 Token 等任意类型。返回 AuthResult 封装类，提供 success/failure 工厂方法。</span>
+      <span class="card-tag">扩展</span>
+    </div>
+    <div class="feature-card">
+      <span class="card-number">07</span>
+      <span class="card-title">网关请求头规范</span>
+      <span class="card-desc">标准化 X-User-Id、X-Username、X-User-Roles、X-User-Permissions 四个请求头。网关认证后注入，下游服务直接使用。网关必须移除客户端原始请求头防止身份伪造。</span>
+      <span class="card-tag">安全</span>
+    </div>
+    <div class="feature-card">
+      <span class="card-number">08</span>
+      <span class="card-title">统一异常处理</span>
+      <span class="card-desc">AuthenticationEntryPoint 和 AccessDeniedHandler 委托给 HandlerExceptionResolver，通过 @ControllerAdvice 统一处理。认证异常仅记录日志，不阻断过滤器链。</span>
+      <span class="card-tag">基础设施</span>
+    </div>
+    <div class="feature-card">
+      <span class="card-number">09</span>
+      <span class="card-title">权限缓存优化</span>
+      <span class="card-desc">CustomUserDetails 的 getAuthorities() 将权限字符串延迟转换为 SimpleGrantedAuthority 并缓存到 transient 字段。setPermissions() 时自动清除缓存。</span>
+      <span class="card-tag">性能</span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <span class="section-number">[03]</span>
+    <span class="section-line"></span>
+  </div>
+  <h2 class="section-title">
+    <span class="label-prefix">/ 架构设计</span>
+    架构
+  </h2>
+
+  <p class="sub-heading" style="margin-top:0">过滤器链</p>
+  <p class="pipeline-desc">每个 HTTP 请求进入后，JwtAuthenticationFilter（扩展自 OncePerRequestFilter）在 UsernamePasswordAuthenticationFilter 之前拦截。自动识别网关模式与 JWT 模式。</p>
+  <div class="pipeline">
+    <span class="pipeline-node">SecurityContextPersistenceFilter</span>
+    <span class="pipeline-arrow">&rarr;</span>
+    <span class="pipeline-node accent">JwtAuthenticationFilter</span>
+    <span class="pipeline-arrow">&rarr;</span>
+    <span class="pipeline-node">SecurityContextHolder</span>
+    <span class="pipeline-arrow">&rarr;</span>
+    <span class="pipeline-node">WinterSecurityCtx</span>
+    <span class="pipeline-arrow">&rarr;</span>
+    <span class="pipeline-node">FilterSecurityInterceptor</span>
+  </div>
+
+  <p class="label" style="margin:var(--space-2xl) 0 var(--space-sm)">JwtAuthenticationFilter 处理流程</p>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:var(--space-md) var(--space-lg);margin-bottom:var(--space-lg)">
+    <div class="flow-row"><span class="flow-dot"></span><span class="flow-label">1</span><span>请求进入，提取 Authorization 头</span></div>
+    <div class="flow-row"><span class="flow-dot"></span><span class="flow-label">2</span><span>白名单匹配 — 命中则跳过认证直接放行</span></div>
+    <div class="flow-row"><span class="flow-dot accent"></span><span class="flow-label">3</span><span>网关模式检测 — X-User-Id 和 X-Username 是否存在</span></div>
+    <div class="flow-row"><span class="flow-dot success"></span><span class="flow-label">4</span><span>是 → 从请求头提取用户信息，跳过 Token 解析</span></div>
+    <div class="flow-row"><span class="flow-dot accent"></span><span class="flow-label">5</span><span>否 → JWT 模式，提取 Bearer Token 调用 TokenAuthenticator</span></div>
+    <div class="flow-row"><span class="flow-dot"></span><span class="flow-label">6</span><span>设置双重上下文 — SecurityContextHolder + WinterSecurityContextHolder</span></div>
+    <div class="flow-row"><span class="flow-dot success"></span><span class="flow-label">7</span><span>finally 块清理所有上下文，防止线程池数据泄漏</span></div>
+  </div>
+
+  <p class="label" style="margin-bottom:var(--space-sm)">自动装配流程</p>
+  <div class="arch-tree">Spring Boot 应用
+  &boxvr;&boxH; winter.security.* 配置 (application.yml)
+  &boxvr;&boxH; META-INF/spring.factories
+  &boxvr;     &boxur;&boxH; <span class="hl">SecurityAutoConfiguration</span>   <span class="dim">// @ConditionalOnClass</span>
+  &boxvr;
+  &boxvr;&boxH; 条件化 Bean 注册
+  &boxvr;     <span class="sec">SecurityProperties</span>              <span class="dim">// @EnableConfigurationProperties</span>
+  &boxvr;     <span class="hl">TokenAuthenticator</span>               <span class="dim">// @ConditionalOnMissingBean → DefaultTokenAuthenticator</span>
+  &boxvr;     <span class="hl">JwtAuthenticationFilter</span>         <span class="dim">// @ConditionalOnMissingBean</span>
+  &boxvr;     <span class="sec">SecurityConfig</span>                  <span class="dim">// @Import({SecurityConfig.class})</span>
+  &boxvr;
+  &boxur;&boxH; SecurityConfig (WebSecurityConfigurerAdapter)
+        <span class="dim">CSRF disable · STATELESS · whitelist · addFilterBefore · @EnableGlobalMethodSecurity</span></div>
+
+  <p class="label" style="margin-bottom:var(--space-sm)">Bean 加载顺序</p>
+  <p class="pipeline-desc">Spring 容器启动时，Auto-Configuration 按以下顺序注册 Bean。标记红色的可通过自定义 <span class="inline-code-sec">@Component</span> 替代。</p>
+  <div class="bean-order">
+    <span class="bean-order-item">SecurityProperties</span>
+    <span class="bean-order-arrow">&rarr;</span>
+    <span class="bean-order-item highlight">TokenAuthenticator</span>
+    <span class="bean-order-arrow">&rarr;</span>
+    <span class="bean-order-item highlight">JwtAuthFilter</span>
+    <span class="bean-order-arrow">&rarr;</span>
+    <span class="bean-order-item">SecurityConfig</span>
+    <span class="bean-order-arrow">&rarr;</span>
+    <span class="bean-order-item">WinterCtxHolder</span>
+    <span class="bean-order-arrow">&rarr;</span>
+    <span class="bean-order-item">SecurityCtxHolder</span>
+  </div>
+
+  <p class="label" style="margin-bottom:var(--space-sm)">核心组件</p>
+  <table class="ext-table">
+    <thead><tr><th>Component</th><th>Package</th><th>Responsibility</th></tr></thead>
+    <tbody>
+      <tr><td>SecurityAutoConfiguration</td><td>config</td><td>自动装配入口。@ConditionalOnClass 仅在安全环境激活，通过 @ConditionalOnMissingBean 注册默认 Bean。</td></tr>
+      <tr><td>SecurityConfig</td><td>config</td><td>HTTP 安全策略。禁用 CSRF 表单登录，STATELESS 会话。JwtAuthFilter 插入过滤器链。异常委托 HandlerExceptionResolver。</td></tr>
+      <tr><td>JwtAuthenticationFilter</td><td>filter</td><td>核心过滤器（OncePerRequestFilter）。网关优先双路径认证，finally 块清理所有上下文。</td></tr>
+      <tr><td>TokenAuthenticator</td><td>config</td><td>@FunctionalInterface。实现 authenticate(String) 提供验证逻辑。支持任意 Token 类型。</td></tr>
+      <tr><td>DefaultTokenAuthenticator</td><td>config</td><td>默认 Fallback。接受 "DefaultTokenAuthenticator" 前缀 Token，返回硬编码用户。启动打印安全警告。</td></tr>
+      <tr><td>WinterSecurityContextHolder</td><td>context</td><td>TTL 静态工具类。getUserId、getRoles、hasRole 等 9 个线程安全方法。</td></tr>
+      <tr><td>SecurityProperties</td><td>config</td><td>@ConfigurationProperties("winter.security")。管理白名单、请求头、Bearer 前缀等。</td></tr>
+      <tr><td>CustomUserDetails</td><td>model</td><td>UserDetails 实现。权限字符串延迟转换为 SimpleGrantedAuthority 并缓存。</td></tr>
+      <tr><td>ValidateToken</td><td>model</td><td>@Builder DTO。valid、userId、userName、roles、permissions。</td></tr>
+      <tr><td>SecurityConstants</td><td>constants</td><td>统一常量类。HTTP 头、JWT 常量、路径内部类。</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <span class="section-number">[04]</span>
+    <span class="section-line"></span>
+  </div>
+  <h2 class="section-title">
+    <span class="label-prefix">/ 使用流程</span>
+    工作流程
+  </h2>
+  <div class="workflow-steps">
+    <div class="workflow-step">
+      <span class="step-num">01</span>
+      <div class="step-content">
+        <div class="step-title">添加 Maven 依赖</div>
+        <div class="step-desc">
+          在项目的 <span class="inline-code-sec">pom.xml</span> 中引入以下依赖。已发布至 Maven 中央仓库，无需额外配置仓库地址。
+          <div class="code-block"><span class="cm">&lt;!-- pom.xml --&gt;</span>
+&lt;dependency&gt;
+  &lt;groupId&gt;io.github.hahaha-zsq&lt;/groupId&gt;
+  &lt;artifactId&gt;winter-security-spring-boot-starter&lt;/artifactId&gt;
+  &lt;version&gt;0.0.3&lt;/version&gt;
+&lt;/dependency&gt;</div>
+        </div>
+      </div>
+    </div>
+    <div class="workflow-step">
+      <span class="step-num">02</span>
+      <div class="step-content">
+        <div class="step-title">实现 TokenAuthenticator 接口</div>
+        <div class="step-desc">
+          生产环境必须实现。Spring Boot 通过 <span class="inline-code-sec">@ConditionalOnMissingBean</span> 自动注入自定义 Bean，替代默认的开发用验证器。
+          <div class="code-block"><span class="kw">@Component</span>
+<span class="kw">public class</span> JwtTokenAuthenticator <span class="kw">implements</span> TokenAuthenticator {
+
+    <span class="kw">@Value</span>(<span class="str">"${jwt.secret}"</span>)
+    <span class="kw">private</span> String jwtSecret;
+
+    <span class="kw">@Autowired</span>
+    <span class="kw">private</span> UserService userService;
+
+    <span class="kw">@Override</span>
+    <span class="kw">public</span> AuthResult authenticate(String token) {
+        <span class="kw">try</span> {
+            Claims claims = Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody();
+
+            Long userId = Long.valueOf(claims.getSubject());
+            User user = userService.getById(userId);
+
+            ValidateToken result = ValidateToken.builder()
+                .valid(<span class="str">true</span>)
+                .userId(userId)
+                .userName(claims.get(<span class="str">"username"</span>, String.class))
+                .roles(user.getRoles())
+                .permissions(user.getPermissions())
+                .build();
+
+            <span class="kw">return</span> AuthResult.success(result);
+        } <span class="kw">catch</span> (ExpiredJwtException e) {
+            <span class="kw">return</span> AuthResult.failure(<span class="str">"Token 已过期"</span>);
+        } <span class="kw">catch</span> (SignatureException e) {
+            <span class="kw">return</span> AuthResult.failure(<span class="str">"Token 签名无效"</span>);
+        } <span class="kw">catch</span> (Exception e) {
+            <span class="kw">return</span> AuthResult.failure(<span class="str">"验证失败: "</span> + e.getMessage());
+        }
+    }
+}</div>
+        </div>
+      </div>
+    </div>
+    <div class="workflow-step">
+      <span class="step-num">03</span>
+      <div class="step-content">
+        <div class="step-title">配置 application.yml（可选）</div>
+        <div class="step-desc">
+          自定义白名单、请求头名称等。不配置则使用合理的默认值，可直接跳过此步骤。
+          <div class="code-block"><span class="cm"># application.yml</span>
+<span class="kw">winter</span>:
+  <span class="kw">security</span>:
+    <span class="kw">whitelist</span>:
+      <span class="kw">urls</span>:
+        - <span class="str">/api/public/**</span>
+        - <span class="str">/auth/**</span>
+        - <span class="str">/actuator/**</span>
+    <span class="kw">user-id-header</span>: <span class="str">X-User-Id</span>
+    <span class="kw">username-header</span>: <span class="str">X-Username</span>
+    <span class="kw">roles-header</span>: <span class="str">X-User-Roles</span>
+    <span class="kw">permissions-header</span>: <span class="str">X-User-Permissions</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="workflow-step">
+      <span class="step-num">04</span>
+      <div class="step-content">
+        <div class="step-title">获取用户信息与权限控制</div>
+        <div class="step-desc">
+          认证成功后，两套上下文同时可用。<span class="inline-code-sec">WinterSecurityContextHolder</span> 提供 9 个线程安全的 API 方法。
+          <div class="code-block"><span class="kw">@RestController</span>
+<span class="kw">@RequestMapping</span>(<span class="str">"/api/user"</span>)
+<span class="kw">public class</span> UserController {
+
+    <span class="kw">@GetMapping</span>(<span class="str">"/info"</span>)
+    <span class="kw">public</span> UserInfo getCurrentUser() {
+        String userId = WinterSecurityContextHolder.getUserId();
+        <span class="kw">return new</span> UserInfo(userId,
+            WinterSecurityContextHolder.getUsername(),
+            WinterSecurityContextHolder.getRoles());
+    }
+
+    <span class="kw">@PreAuthorize</span>(<span class="str">"hasAuthority('user:delete')"</span>)
+    <span class="kw">@DeleteMapping</span>(<span class="str">"/{id}"</span>)
+    <span class="kw">public void</span> deleteUser(<span class="kw">@PathVariable</span> Long id) { }
+}</div>
+        </div>
+      </div>
+    </div>
+    <div class="workflow-step">
+      <span class="step-num">05</span>
+      <div class="step-content">
+        <div class="step-title">网关集成与请求头规范</div>
+        <div class="step-desc">
+          使用 Spring Cloud Gateway 时，网关过滤器中验证 Token 后将用户信息注入 HTTP 请求头。网关<strong>必须</strong>移除客户端原始传递的安全请求头以防止身份伪造。
+          <div class="code-block"><span class="kw">@Component</span>
+<span class="kw">public class</span> AuthGatewayFilter <span class="kw">implements</span> GlobalFilter, Ordered {
+    <span class="kw">@Override</span>
+    <span class="kw">public</span> Mono&lt;Void&gt; filter(ServerWebExchange exchange,
+                             GatewayFilterChain chain) {
+        String token = extractToken(exchange.getRequest());
+        UserInfo userInfo = validateToken(token);
+
+        ServerHttpRequest request = exchange.getRequest().mutate()
+            .header(<span class="str">"X-User-Id"</span>, userInfo.getUserId().toString())
+            .header(<span class="str">"X-Username"</span>, userInfo.getUsername())
+            .header(<span class="str">"X-User-Roles"</span>,
+                String.join(<span class="str">","</span>, userInfo.getRoles()))
+            .header(<span class="str">"X-User-Permissions"</span>,
+                String.join(<span class="str">","</span>, userInfo.getPermissions()))
+            .build();
+
+        <span class="cm">// 移除原始 Authorization 头</span>
+        request = request.mutate()
+            .headers(h -> h.remove(<span class="str">"Authorization"</span>)).build();
+
+        <span class="kw">return</span> chain.filter(
+            exchange.mutate().request(request).build());
+    }
+    <span class="kw">@Override public int</span> getOrder() { <span class="kw">return</span> -100; }
+}</div>
+          <p class="body-sm"><strong>网关请求头规范（定义于 SecurityConstants）：</strong></p>
+          <div class="ext-table" style="display:table;width:100%;">
+            <div style="display:table-row;font-family:var(--font-mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-disabled);border-bottom:1px solid var(--border-visible);">
+              <span style="display:table-cell;padding:var(--space-sm) var(--space-md)">Header</span>
+              <span style="display:table-cell;padding:var(--space-sm) var(--space-md)">Example</span>
+              <span style="display:table-cell;padding:var(--space-sm) var(--space-md)">Description</span>
+            </div>
+            <div style="display:table-row;border-bottom:1px solid var(--border);">
+              <span style="display:table-cell;padding:var(--space-sm) var(--space-md);font-family:var(--font-mono);font-size:13px;color:var(--text-display)">X-User-Id</span>
+              <span style="display:table-cell;padding:var(--space-sm) var(--space-md);font-family:var(--font-mono);font-size:12px;color:var(--text-secondary)">10001</span>
+              <span style="display:table-cell;padding:var(--space-sm) var(--space-md);font-size:14px;color:var(--text-primary)">用户唯一标识</span>
+            </div>
+            <div style="display:table-row;border-bottom:1px solid var(--border);">
+              <span style="display:table-cell;padding:var(--space-sm) var(--space-md);font-family:var(--font-mono);font-size:13px;color:var(--text-display)">X-Username</span>
+              <span style="display:table-cell;padding:var(--space-sm) var(--space-md);font-family:var(--font-mono);font-size:12px;color:var(--text-secondary)">zhangsan</span>
+              <span style="display:table-cell;padding:var(--space-sm) var(--space-md);font-size:14px;color:var(--text-primary)">用户登录名</span>
+            </div>
+            <div style="display:table-row;border-bottom:1px solid var(--border);">
+              <span style="display:table-cell;padding:var(--space-sm) var(--space-md);font-family:var(--font-mono);font-size:13px;color:var(--text-display)">X-User-Roles</span>
+              <span style="display:table-cell;padding:var(--space-sm) var(--space-md);font-family:var(--font-mono);font-size:12px;color:var(--text-secondary)">admin,user</span>
+              <span style="display:table-cell;padding:var(--space-sm) var(--space-md);font-size:14px;color:var(--text-primary)">角色列表，逗号分隔</span>
+            </div>
+            <div style="display:table-row;">
+              <span style="display:table-cell;padding:var(--space-sm) var(--space-md);font-family:var(--font-mono);font-size:13px;color:var(--text-display)">X-User-Permissions</span>
+              <span style="display:table-cell;padding:var(--space-sm) var(--space-md);font-family:var(--font-mono);font-size:12px;color:var(--text-secondary)">user:read,user:write</span>
+              <span style="display:table-cell;padding:var(--space-sm) var(--space-md);font-size:14px;color:var(--text-primary)">权限列表，逗号分隔</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <span class="section-number">[05]</span>
+    <span class="section-line"></span>
+  </div>
+  <h2 class="section-title">
+    <span class="label-prefix">/ 配置参考</span>
+    配置项
+  </h2>
+  <table class="ext-table">
+    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>winter.security.whitelist.urls</td><td>/actuator/**, /auth/**, /swagger-ui/** ...</td><td>跳过认证的 URL 白名单（18 个默认路径）</td></tr>
+      <tr><td>winter.security.user-id-header</td><td>X-User-Id</td><td>网关传递用户 ID 的请求头</td></tr>
+      <tr><td>winter.security.username-header</td><td>X-Username</td><td>网关传递用户名的请求头</td></tr>
+      <tr><td>winter.security.roles-header</td><td>X-User-Roles</td><td>网关传递角色列表的请求头</td></tr>
+      <tr><td>winter.security.permissions-header</td><td>X-User-Permissions</td><td>网关传递权限列表的请求头</td></tr>
+      <tr><td>winter.security.authorization-header</td><td>Authorization</td><td>JWT 认证请求头名称</td></tr>
+      <tr><td>winter.security.bearer-prefix</td><td>"Bearer "</td><td>JWT Token 前缀</td></tr>
+      <tr><td>winter.security.gateway-role-and-permission-separator</td><td>,</td><td>角色和权限列表分隔符</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <span class="section-number">[06]</span>
+    <span class="section-line"></span>
+  </div>
+  <h2 class="section-title">
+    <span class="label-prefix">/ 注意事项</span>
+    重要提示
+  </h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-sm)">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:var(--space-sm) var(--space-md)">
+      <span class="caption" style="display:block;color:var(--accent)">网关请求头</span>
+      <span class="body-sm">网关必须移除客户端传递的 X-User-Id、X-Username 等请求头，防止用户伪造身份信息。网关是信任的边界。</span>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:var(--space-sm) var(--space-md)">
+      <span class="caption" style="display:block;color:var(--accent)">TokenAuthenticator 必须替换</span>
+      <span class="body-sm">默认实现仅用于开发调试，接受 "DefaultTokenAuthenticator" 前缀 Token 并返回硬编码用户（ID=666666）。</span>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:var(--space-sm) var(--space-md)">
+      <span class="caption" style="display:block;color:var(--warning)">CSRF 默认禁用</span>
+      <span class="body-sm">适用于无状态 REST API。若需要有状态场景需自行覆盖 SecurityConfig 的 configure(HttpSecurity) 方法。</span>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:var(--space-sm) var(--space-md)">
+      <span class="caption" style="display:block;color:var(--warning)">STATELESS 会话</span>
+      <span class="body-sm">Session 策略为 STATELESS，不创建 HttpSession。需要会话的场景需自行调整 SessionCreationPolicy。</span>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:var(--space-sm) var(--space-md)">
+      <span class="caption" style="display:block;color:var(--text-secondary)">异步上下文传播</span>
+      <span class="body-sm">TTL 确保 @Async 和自定义线程池中用户上下文自动传递。需确保线程池使用 TTL 包装方式。</span>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:var(--space-sm) var(--space-md)">
+      <span class="caption" style="display:block;color:var(--text-secondary)">finally 防泄漏</span>
+      <span class="body-sm">过滤器同时调用 WinterSecurityContextHolder.clear() 和 SecurityContextHolder.clearContext()，避免线程池复用导致的数据污染。</span>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:var(--space-sm) var(--space-md)">
+      <span class="caption" style="display:block;color:var(--text-secondary)">异常隔离设计</span>
+      <span class="body-sm">认证异常仅记录日志，不阻断过滤器链。业务代码可通过检查 SecurityContext 是否为空来判断认证状态。</span>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:var(--space-sm) var(--space-md)">
+      <span class="caption" style="display:block;color:var(--text-secondary)">Jackson 安全</span>
+      <span class="body-sm">解析逗号分隔字符串时使用 stream().collect(Collectors.toList()) 而非 Arrays.asList()，避免 Jackson 反序列化类型白名单问题。</span>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:var(--space-sm) var(--space-md);grid-column:1/-1">
+      <span class="caption" style="display:block;color:var(--text-secondary)">CustomUserDetails 权限缓存</span>
+      <span class="body-sm">getAuthorities() 将权限延迟转换为 SimpleGrantedAuthority 并缓存到 transient 字段。setPermissions() 时自动清除缓存。白名单内建 18 个默认路径（actuator、健康检查、静态资源、Swagger、auth 端点、错误处理等）。</span>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div>
+    <span class="label">Winter Security Spring Boot Starter</span>
+    <span class="label" style="margin-left:var(--space-md);opacity:0.5">0.0.3</span>
+  </div>
+  <div style="display:flex;gap:var(--space-lg);align-items:center">
+    <a href="https://github.com/hahaha-zsq/winter-security-spring-boot-starter" target="_blank">GitHub</a>
+    <a href="https://search.maven.org/artifact/io.github.hahaha-zsq/winter-security-spring-boot-starter" target="_blank">Maven Central</a>
+    <span class="label" style="opacity:0.4">Apache 2.0</span>
+  </div>
+</footer>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+}
+</script>
+
+</body>
+</html>
